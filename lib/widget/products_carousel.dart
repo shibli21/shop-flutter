@@ -20,8 +20,8 @@ class ProductsCarousel extends StatelessWidget {
         itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
             Container(
           padding: const EdgeInsets.fromLTRB(0, 16, 16, 16),
-          child: ChangeNotifierProvider(
-            create: (context) => products[itemIndex],
+          child: ChangeNotifierProvider.value(
+            value: products[itemIndex],
             child: const ProductItem(),
           ),
         ),
