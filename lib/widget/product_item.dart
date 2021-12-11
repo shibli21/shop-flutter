@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop/providers/product.dart';
 import 'package:shop/screen/product_detail_screen.dart';
 
 class ProductItem extends StatelessWidget {
-  final String id;
-  final String title;
-  final String imageUrl;
-  final double price;
-
-  const ProductItem(this.id, this.title, this.imageUrl, this.price, {Key? key})
-      : super(key: key);
+  const ProductItem({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final product = Provider.of<Product>(context);
+
     return Column(
       children: [
         GestureDetector(
           onTap: () {
             Navigator.of(context).pushNamed(
               ProductDetailScreen.routeName,
-              arguments: id,
+              arguments: product.id,
             );
           },
           child: ClipRRect(
@@ -33,7 +31,7 @@ class ProductItem extends StatelessWidget {
                     child: Column(
                       children: [
                         Image.network(
-                          imageUrl,
+                          product.imageUrl,
                           fit: BoxFit.cover,
                           height: 250,
                           width: double.infinity,
@@ -43,10 +41,10 @@ class ProductItem extends StatelessWidget {
                   ),
                   ListTile(
                     title: Text(
-                      title,
+                      product.title,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    subtitle: Text('\$$price'),
+                    subtitle: Text('\$${product.price}'),
                     trailing: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
@@ -62,8 +60,12 @@ class ProductItem extends StatelessWidget {
                         radius: 18,
                         backgroundColor: Colors.red[400],
                         child: IconButton(
-                          icon: const Icon(Icons.favorite),
-                          onPressed: () {},
+                          icon: product.isFavorite
+                              ? Icon(Icons.favorite)
+                              : Icon(Icons.favorite_border),
+                          onPressed: () {
+                            product.toogleFavouriteStatus();
+                          },
                           iconSize: 20,
                           color: Colors.white,
                         ),

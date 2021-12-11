@@ -1,11 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop/model/product.dart';
 import 'package:shop/providers/products.dart';
 import 'package:shop/widget/product_item.dart';
 
 class ProductsCarousel extends StatelessWidget {
+  const ProductsCarousel({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final productsData = Provider.of<Products>(context);
@@ -19,11 +20,9 @@ class ProductsCarousel extends StatelessWidget {
         itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
             Container(
           padding: const EdgeInsets.fromLTRB(0, 16, 16, 16),
-          child: ProductItem(
-            products[itemIndex].id,
-            products[itemIndex].title,
-            products[itemIndex].imageUrl,
-            products[itemIndex].price,
+          child: ChangeNotifierProvider(
+            create: (context) => products[itemIndex],
+            child: const ProductItem(),
           ),
         ),
         options: CarouselOptions(
