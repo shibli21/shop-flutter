@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop/providers/products.dart';
 import 'package:shop/widget/products_carousel.dart';
-// import 'package:flutter_icons/flutter_icons.dart';
+import 'package:shop/widget/products_grid.dart';
 
-class ProductsOverviewScreen extends StatelessWidget {
+enum FilterOptions {
+  Favorites,
+  All,
+}
+
+class ProductsOverviewScreen extends StatefulWidget {
   const ProductsOverviewScreen({Key? key}) : super(key: key);
 
   @override
+  State<ProductsOverviewScreen> createState() => _ProductsOverviewScreenState();
+}
+
+class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
+  var _showOnlyFavorites = false;
+
+  @override
   Widget build(BuildContext context) {
+    final productsContainer = Provider.of<Products>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -24,6 +39,33 @@ class ProductsOverviewScreen extends StatelessWidget {
             );
           },
         ),
+        actions: <Widget>[
+          PopupMenuButton(
+            onSelected: (FilterOptions selectedValue) {
+              setState(() {
+                if (selectedValue == FilterOptions.Favorites) {
+                  _showOnlyFavorites = true;
+                } else {
+                  _showOnlyFavorites = false;
+                }
+              });
+            },
+            itemBuilder: (_) => const [
+              PopupMenuItem(
+                child: Text('Favourites'),
+                value: FilterOptions.Favorites,
+              ),
+              PopupMenuItem(
+                child: Text('Show all'),
+                value: FilterOptions.All,
+              ),
+            ],
+            icon: const Icon(
+              Icons.more_vert,
+              color: Colors.black,
+            ),
+          ),
+        ],
       ),
       drawer: Drawer(
         child: ListView(
@@ -48,7 +90,9 @@ class ProductsOverviewScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: ProductsCarousel(),
+      body: Container(
+        child: ProductsGrid(_showOnlyFavorites),
+      ),
     );
   }
 }

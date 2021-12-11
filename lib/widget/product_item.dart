@@ -23,7 +23,7 @@ class ProductItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             child: Container(
               color: Colors.white,
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.fromLTRB(15, 15, 15, 5),
               child: Column(
                 children: [
                   ClipRRect(
@@ -40,6 +40,8 @@ class ProductItem extends StatelessWidget {
                     ),
                   ),
                   ListTile(
+                    visualDensity: VisualDensity.compact,
+                    contentPadding: EdgeInsets.zero,
                     title: Text(
                       product.title,
                       style: const TextStyle(fontWeight: FontWeight.bold),

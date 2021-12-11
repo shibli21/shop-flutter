@@ -5,12 +5,14 @@ import 'package:shop/providers/products.dart';
 import 'package:shop/widget/product_item.dart';
 
 class ProductsCarousel extends StatelessWidget {
-  const ProductsCarousel({Key? key}) : super(key: key);
+  final bool showFavs;
+
+  const ProductsCarousel(this.showFavs, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final productsData = Provider.of<Products>(context);
-    final products = productsData.items;
+    final products = showFavs ? productsData.favoriteItems : productsData.items;
 
     return Container(
       color: Colors.grey[100],
