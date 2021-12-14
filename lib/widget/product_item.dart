@@ -48,8 +48,8 @@ class ProductItem extends StatelessWidget {
                         top: 5,
                         child: IconButton(
                           icon: product.isFavorite
-                              ? Icon(Icons.favorite)
-                              : Icon(Icons.favorite_border),
+                              ? const Icon(Icons.favorite)
+                              : const Icon(Icons.favorite_border),
                           onPressed: () {
                             product.toogleFavouriteStatus();
                           },

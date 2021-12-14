@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/providers/orders.dart';
 import 'package:shop/widget/cart_item.dart';
+
 import '../providers/cart.dart' show Cart;
 
 class CartScreen extends StatelessWidget {
@@ -59,8 +61,14 @@ class CartScreen extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
               ),
-              onPressed: () {},
-              child: const Text('Checkout'),
+              onPressed: () {
+                Provider.of<Orders>(context, listen: false).addOrder(
+                  cart.items.values.toList(),
+                  cart.totalAmount,
+                );
+                cart.clearCart();
+              },
+              child: const Text('Order Now'),
               minWidth: double.infinity,
             ),
           ],

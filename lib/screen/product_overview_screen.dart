@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/providers/cart.dart';
-import 'package:shop/providers/products.dart';
 import 'package:shop/screen/cart_screen.dart';
+import 'package:shop/widget/app_drawer.dart';
 import 'package:shop/widget/badge.dart';
-import 'package:shop/widget/products_carousel.dart';
 import 'package:shop/widget/products_grid.dart';
 
 enum FilterOptions {
-  Favorites,
-  All,
+  favorites,
+  all,
 }
 
 class ProductsOverviewScreen extends StatefulWidget {
@@ -58,7 +57,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
           PopupMenuButton(
             onSelected: (FilterOptions selectedValue) {
               setState(() {
-                if (selectedValue == FilterOptions.Favorites) {
+                if (selectedValue == FilterOptions.favorites) {
                   _showOnlyFavorites = true;
                 } else {
                   _showOnlyFavorites = false;
@@ -68,11 +67,11 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
             itemBuilder: (_) => const [
               PopupMenuItem(
                 child: Text('Favourites'),
-                value: FilterOptions.Favorites,
+                value: FilterOptions.favorites,
               ),
               PopupMenuItem(
                 child: Text('Show all'),
-                value: FilterOptions.All,
+                value: FilterOptions.all,
               ),
             ],
             icon: const Icon(
@@ -82,29 +81,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
           ),
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue),
-              child: Text('Drawer Header'),
-            ),
-            ListTile(
-              title: const Text('Item 1'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Item 2'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: const AppDrawer(),
       body: ProductsGrid(_showOnlyFavorites),
     );
   }
