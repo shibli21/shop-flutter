@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/providers/cart.dart';
 import 'package:shop/providers/products.dart';
+import 'package:shop/screen/cart_screen.dart';
+import 'package:shop/widget/badge.dart';
 import 'package:shop/widget/products_carousel.dart';
 import 'package:shop/widget/products_grid.dart';
 
@@ -21,7 +24,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final productsContainer = Provider.of<Products>(context, listen: false);
+    final cart = Provider.of<Cart>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -40,6 +43,18 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
           },
         ),
         actions: <Widget>[
+          Badge(
+            value: cart.itemsCount.toString(),
+            child: IconButton(
+              icon: const Icon(
+                Icons.shopping_cart,
+              ),
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartScreen.routeName);
+              },
+            ),
+            color: Colors.redAccent,
+          ),
           PopupMenuButton(
             onSelected: (FilterOptions selectedValue) {
               setState(() {
@@ -90,9 +105,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
           ],
         ),
       ),
-      body: Container(
-        child: ProductsGrid(_showOnlyFavorites),
-      ),
+      body: ProductsGrid(_showOnlyFavorites),
     );
   }
 }

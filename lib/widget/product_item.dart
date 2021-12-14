@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/providers/cart.dart';
 import 'package:shop/providers/product.dart';
 import 'package:shop/screen/product_detail_screen.dart';
 
@@ -9,6 +10,7 @@ class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context);
+    final cart = Provider.of<Cart>(context, listen: false);
 
     return Column(
       children: [
@@ -26,18 +28,36 @@ class ProductItem extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(15, 15, 15, 5),
               child: Column(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Column(
-                      children: [
-                        Image.network(
-                          product.imageUrl,
-                          fit: BoxFit.cover,
-                          height: 250,
-                          width: double.infinity,
+                  Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Column(
+                          children: [
+                            Image.network(
+                              product.imageUrl,
+                              fit: BoxFit.cover,
+                              height: 250,
+                              width: double.infinity,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                      Positioned(
+                        right: 5,
+                        top: 5,
+                        child: IconButton(
+                          icon: product.isFavorite
+                              ? Icon(Icons.favorite)
+                              : Icon(Icons.favorite_border),
+                          onPressed: () {
+                            product.toogleFavouriteStatus();
+                          },
+                          iconSize: 30,
+                          color: product.isFavorite ? Colors.red : Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                   ListTile(
                     visualDensity: VisualDensity.compact,
@@ -52,21 +72,27 @@ class ProductItem extends StatelessWidget {
                         borderRadius: BorderRadius.circular(50),
                         boxShadow: const [
                           BoxShadow(
-                            color: Colors.red,
-                            offset: Offset(0, 5),
+                            color: Colors.blue,
+                            offset: Offset(0, 10),
                             blurRadius: 8,
+                            spreadRadius: -8,
                           ),
                         ],
                       ),
                       child: CircleAvatar(
                         radius: 18,
-                        backgroundColor: Colors.red[400],
+                        backgroundColor: Colors.blue[300],
                         child: IconButton(
-                          icon: product.isFavorite
-                              ? Icon(Icons.favorite)
-                              : Icon(Icons.favorite_border),
+                          icon: cart.itemsCount.bitLength > 1
+                              ? const Icon(Icons.shopping_cart)
+                              : const Icon(Icons.shopping_cart_outlined),
                           onPressed: () {
-                            product.toogleFavouriteStatus();
+                            cart.addItems(
+                              product.id,
+                              product.price,
+                              product.title,
+                              product.imageUrl,
+                            );
                           },
                           iconSize: 20,
                           color: Colors.white,
@@ -83,9 +109,3 @@ class ProductItem extends StatelessWidget {
     );
   }
 }
-
-
-// [[1,2,3],[1,2,3],[1,2,3],]
-
-
-
