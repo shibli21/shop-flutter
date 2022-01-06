@@ -97,8 +97,8 @@ class _OrderButtonState extends State<OrderButton> {
             },
       padding: const EdgeInsets.only(top: 10, bottom: 10),
       elevation: 1,
-      color: Colors.black,
-      disabledColor: Colors.black12,
+      color: Theme.of(context).primaryColor,
+      disabledColor: Theme.of(context).primaryColor.withOpacity(.7),
       textColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),

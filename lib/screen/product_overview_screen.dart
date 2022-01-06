@@ -52,14 +52,11 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
     final cart = Provider.of<Cart>(context);
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.grey[100],
         leadingWidth: 70,
         automaticallyImplyLeading: true,
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
-              color: Colors.black,
               icon: const Icon(Icons.menu),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
@@ -102,7 +99,6 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
             ],
             icon: const Icon(
               Icons.more_vert,
-              color: Colors.black,
             ),
           ),
         ],

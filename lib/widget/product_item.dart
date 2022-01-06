@@ -24,7 +24,7 @@ class ProductItem extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Container(
-              color: Colors.white,
+              color: Theme.of(context).cardColor,
               padding: const EdgeInsets.fromLTRB(15, 15, 15, 5),
               child: Column(
                 children: [
@@ -70,9 +70,9 @@ class ProductItem extends StatelessWidget {
                     trailing: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
-                        boxShadow: const [
+                        boxShadow: [
                           BoxShadow(
-                            color: Colors.blue,
+                            color: Theme.of(context).primaryColor,
                             offset: Offset(0, 10),
                             blurRadius: 8,
                             spreadRadius: -8,
@@ -81,7 +81,6 @@ class ProductItem extends StatelessWidget {
                       ),
                       child: CircleAvatar(
                         radius: 18,
-                        backgroundColor: Colors.blue[300],
                         child: IconButton(
                           icon: cart.itemsCount.bitLength > 1
                               ? const Icon(Icons.shopping_cart)
@@ -108,7 +107,6 @@ class ProductItem extends StatelessWidget {
                             );
                           },
                           iconSize: 20,
-                          color: Colors.white,
                         ),
                       ),
                     ),

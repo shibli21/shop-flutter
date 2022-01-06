@@ -39,6 +39,7 @@ class CartItem extends StatelessWidget {
         return showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
+            backgroundColor: Theme.of(context).cardColor,
             title: const Text('Are you sure?'),
             content:
                 const Text('Do you want to remove the item from the cart?'),
@@ -46,8 +47,6 @@ class CartItem extends StatelessWidget {
               MaterialButton(
                 elevation: 1,
                 color: Colors.redAccent,
-                textColor: Colors.white,
-                minWidth: MediaQuery.of(context).size.width * .3,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
@@ -58,9 +57,7 @@ class CartItem extends StatelessWidget {
               ),
               MaterialButton(
                 elevation: 1,
-                color: Colors.black,
-                textColor: Colors.white,
-                minWidth: MediaQuery.of(context).size.width * .3,
+                color: Theme.of(context).primaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
@@ -106,17 +103,22 @@ class CartItem extends StatelessWidget {
             title,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
-              color: Colors.black87,
             ),
           ),
           subtitle: Text(
             '\$${(price * quantity)}',
             style: const TextStyle(
               fontWeight: FontWeight.bold,
-              color: Colors.black87,
             ),
           ),
-          trailing: Text('0$quantity'),
+          trailing: Text(
+            '0$quantity',
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
         ),
       ),
     );

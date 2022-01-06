@@ -16,7 +16,6 @@ class ProductDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(loadedProduct.title),
-        backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -25,11 +24,14 @@ class ProductDetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(
-                height: 400,
+                height: 450,
                 width: double.infinity,
-                child: Image.network(
-                  loadedProduct.imageUrl,
-                  fit: BoxFit.cover,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                    loadedProduct.imageUrl,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
@@ -43,14 +45,13 @@ class ProductDetailScreen extends StatelessWidget {
                         "Price",
                         style: TextStyle(
                           fontSize: 20,
-                          color: Colors.grey,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
                         '\$${loadedProduct.price}',
-                        style: const TextStyle(
-                          color: Colors.black,
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
                         ),
@@ -58,11 +59,8 @@ class ProductDetailScreen extends StatelessWidget {
                     ],
                   ),
                   MaterialButton(
-                    padding: const EdgeInsets.only(
-                        top: 15, bottom: 15, left: 20, right: 20),
                     elevation: 1,
-                    color: Colors.black,
-                    textColor: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -79,7 +77,6 @@ class ProductDetailScreen extends StatelessWidget {
                 softWrap: true,
                 style: const TextStyle(
                   fontSize: 18,
-                  color: Colors.grey,
                 ),
               )
             ],

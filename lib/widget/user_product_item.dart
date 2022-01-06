@@ -42,7 +42,6 @@ class UserProductItem extends StatelessWidget {
           title,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
           ),
         ),
         trailing: SizedBox(
@@ -55,7 +54,7 @@ class UserProductItem extends StatelessWidget {
                   Navigator.of(context)
                       .pushNamed(EditProductScreen.routeName, arguments: id);
                 },
-                color: Colors.blueAccent,
+                color: Theme.of(context).primaryColor,
               ),
               IconButton(
                 icon: const Icon(Icons.delete),
