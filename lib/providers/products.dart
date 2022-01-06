@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shop/providers/product.dart';
+import 'package:http/http.dart' as http;
 
 class Products with ChangeNotifier {
   final List<Product> _items = [
@@ -49,17 +52,37 @@ class Products with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  void addProduct(Product product) {
-    final newProduct = Product(
-      id: DateTime.now().toString(),
-      title: product.title,
-      description: product.description,
-      price: product.price,
-      imageUrl: product.imageUrl,
+  Future<void> addProduct(Product product) async {
+    var url = Uri.parse(
+        'https://flutter-shop-8a597-default-rtdb.asia-southeast1.firebasedatabase.app/products.json');
+    var response = await http.post(
+      url,
+      body: json.encode(
+        {
+          'title': product.title,
+          'description': product.description,
+          'imageUrl': product.imageUrl,
+          'price': product.price,
+          'isFavorite': product.isFavorite,
+        },
+      ),
     );
-    _items.add(newProduct);
 
-    notifyListeners();
+    if (response.statusCode == 201) {
+      final newProduct = Product(
+        id: DateTime.now().toString(),
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl,
+      );
+      _items.add(newProduct);
+
+      notifyListeners();
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to create product.');
+    }
   }
 
   void updateProduct(String id, Product newProduct) {
