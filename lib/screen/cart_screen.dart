@@ -53,27 +53,57 @@ class CartScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10),
-            MaterialButton(
-              padding: const EdgeInsets.only(top: 10, bottom: 10),
-              elevation: 1,
-              color: Colors.black,
-              textColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              onPressed: () {
-                Provider.of<Orders>(context, listen: false).addOrder(
-                  cart.items.values.toList(),
-                  cart.totalAmount,
-                );
-                cart.clearCart();
-              },
-              child: const Text('Order Now'),
-              minWidth: double.infinity,
-            ),
+            OrderButton(cart: cart),
           ],
         ),
       ),
+    );
+  }
+}
+
+class OrderButton extends StatefulWidget {
+  const OrderButton({
+    Key? key,
+    required this.cart,
+  }) : super(key: key);
+
+  final Cart cart;
+
+  @override
+  State<OrderButton> createState() => _OrderButtonState();
+}
+
+class _OrderButtonState extends State<OrderButton> {
+  var _isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      child: _isLoading ? const Text("Loading...") : const Text('ORDER NOW'),
+      onPressed: (widget.cart.totalAmount <= 0 || _isLoading)
+          ? null
+          : () async {
+              setState(() {
+                _isLoading = true;
+              });
+              await Provider.of<Orders>(context, listen: false).addOrder(
+                widget.cart.items.values.toList(),
+                widget.cart.totalAmount,
+              );
+              setState(() {
+                _isLoading = false;
+              });
+              widget.cart.clearCart();
+            },
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
+      elevation: 1,
+      color: Colors.black,
+      disabledColor: Colors.black12,
+      textColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
+      ),
+      minWidth: double.infinity,
     );
   }
 }
