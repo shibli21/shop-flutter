@@ -36,8 +36,7 @@ class ProductItem extends StatelessWidget {
                           children: [
                             Image.network(
                               product.imageUrl,
-                              fit: BoxFit.cover,
-                              height: 250,
+                              fit: BoxFit.contain,
                               width: double.infinity,
                             ),
                           ],
