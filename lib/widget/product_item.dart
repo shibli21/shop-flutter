@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/providers/auth.dart';
 import 'package:shop/providers/cart.dart';
 import 'package:shop/providers/product.dart';
 import 'package:shop/screen/product_detail_screen.dart';
@@ -11,6 +12,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context);
     final cart = Provider.of<Cart>(context, listen: false);
+    final authData = Provider.of<Auth>(context, listen: false);
 
     return Column(
       children: [
@@ -50,7 +52,9 @@ class ProductItem extends StatelessWidget {
                               ? const Icon(Icons.favorite)
                               : const Icon(Icons.favorite_border),
                           onPressed: () {
-                            product.toogleFavouriteStatus();
+                            product.toogleFavouriteStatus(
+                              authData.token as String,
+                            );
                           },
                           iconSize: 30,
                           color: product.isFavorite ? Colors.red : Colors.white,
