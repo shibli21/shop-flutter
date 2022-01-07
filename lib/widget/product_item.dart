@@ -54,6 +54,7 @@ class ProductItem extends StatelessWidget {
                           onPressed: () {
                             product.toogleFavouriteStatus(
                               authData.token as String,
+                              authData.userId as String,
                             );
                           },
                           iconSize: 30,
