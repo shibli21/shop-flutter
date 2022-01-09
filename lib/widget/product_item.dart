@@ -36,14 +36,10 @@ class ProductItem extends StatelessWidget {
                         tag: product.id,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
-                          child: Column(
-                            children: [
-                              Image.network(
-                                product.imageUrl,
-                                fit: BoxFit.contain,
-                                width: double.infinity,
-                              ),
-                            ],
+                          child: Image.network(
+                            product.imageUrl,
+                            fit: BoxFit.contain,
+                            width: double.infinity,
                           ),
                         ),
                       ),

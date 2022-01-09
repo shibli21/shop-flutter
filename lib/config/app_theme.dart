@@ -30,7 +30,7 @@ class AppTheme {
           ButtonStyle(elevation: MaterialStateProperty.all(0)),
         )),
         appBarTheme: const AppBarTheme(
-          color: Colors.transparent,
+          color: Color.fromRGBO(31, 29, 44, 1),
           elevation: 0,
         ),
         canvasColor: const Color.fromRGBO(31, 29, 44, 1),
